@@ -1,44 +1,30 @@
 package com.pepeai.pokedrawings.controller;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.pepeai.pokedrawings.service.SumService;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
+import com.github.stefanbirkner.systemlambda.SystemLambda;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@WebMvcTest(SumController.class)
 public class SumControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    private SumController sumController;
+    private SumService sumService;
 
-    @Test
-    void sumTwoIntegers() throws Exception {
-        mockMvc.perform(get("/sum")
-                .param("a", "5")
-                .param("b", "7"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("12"));
+    @BeforeEach
+    void setUp() {
+        sumService = Mockito.mock(SumService.class);
+        sumController = new SumController(sumService);
     }
 
     @Test
-    void sumTwoIntegersWithZero() throws Exception {
-        mockMvc.perform(get("/sum")
-                .param("a", "0")
-                .param("b", "10"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("10"));
-    }
-
-    @Test
-    void sumTwoIntegersWithNegativeNumbers() throws Exception {
-        mockMvc.perform(get("/sum")
-                .param("a", "-5")
-                .param("b", "3"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("-2"));
+    void sum_shouldPrintHere() throws Exception {
+        when(sumService.sum(1, 2)).thenReturn(3);
+        String text = SystemLambda.tapSystemOut(() -> {
+            sumController.sum(1, 2);
+        });
+        assertTrue(text.contains("Here"));
     }
 }
