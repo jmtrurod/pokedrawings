@@ -51,4 +51,9 @@ public class EuropeanCountryServiceTest {
         assertTrue(europeanCountryService.isEuropeanCountry("Macedonia"));
         assertFalse(europeanCountryService.isEuropeanCountry("North Macedonia"));
     }
+
+    @Test
+    void isEuropeanCountry_SpainRemoved_returnsFalse() {
+        assertFalse(europeanCountryService.isEuropeanCountry("Spain"));
+    }
 }

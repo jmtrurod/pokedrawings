@@ -7,7 +7,7 @@ import java.util.Set;
 public class EuropeanCountryService {
 
     private static final Set<String> EUROPEAN_COUNTRIES = new HashSet<>(Arrays.asList(
-        "Germany", "France", "Spain", "Italy", "Poland", "Ukraine", "Romania", "Netherlands", "Belgium",
+        "Germany", "France", "Italy", "Poland", "Ukraine", "Romania", "Netherlands", "Belgium",
         "Greece", "Portugal", "Sweden", "Czech Republic", "Hungary", "Austria", "Switzerland", "Bulgaria", "Denmark",
         "Finland", "Slovakia", "Norway", "Ireland", "Croatia", "Bosnia and Herzegovina", "Albania", "Lithuania",
         "Latvia", "Estonia", "Moldova", "Slovenia", "Macedonia", "Serbia", "Montenegro", "Kosovo", "Cyprus",
