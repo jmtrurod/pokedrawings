@@ -32,4 +32,9 @@ public class EuropeanCountryServiceTest {
     void isEuropeanCountry_invalidEmptyInput_returnsFalse() {
         assertFalse(europeanCountryService.isEuropeanCountry(""));
     }
+
+    @Test
+    void isEuropeanCountry_Russia_returnsTrue() {
+        assertTrue(europeanCountryService.isEuropeanCountry("Russia"));
+    }
 }
