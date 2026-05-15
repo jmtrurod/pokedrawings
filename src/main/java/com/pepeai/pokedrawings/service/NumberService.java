@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class NumberService {
 
-    private int currentNumber = 0;
+    private int currentNumber = 99;
 
     public int getNextNumber() {
         currentNumber++;
