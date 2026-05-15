@@ -45,4 +45,10 @@ public class EuropeanCountryServiceTest {
         assertTrue(europeanCountryService.isEuropeanCountry("England"));
         assertTrue(europeanCountryService.isEuropeanCountry("Wales"));
     }
+
+    @Test
+    void isEuropeanCountry_NorthMacedoniaChangedToMacedonia_returnsTrueForMacedoniaAndFalseForNorthMacedonia() {
+        assertTrue(europeanCountryService.isEuropeanCountry("Macedonia"));
+        assertFalse(europeanCountryService.isEuropeanCountry("North Macedonia"));
+    }
 }
