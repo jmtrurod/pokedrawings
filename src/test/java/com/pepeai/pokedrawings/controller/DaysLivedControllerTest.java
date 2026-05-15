@@ -30,4 +30,12 @@ public class DaysLivedControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(String.valueOf(expectedDays)));
     }
+
+    @Test
+    void testCalculateDaysLived_birthYearBefore1950_shouldReturnBadRequest() throws Exception {
+        String birthDateString = "1949-12-31"; // A date before 1950
+        mockMvc.perform(get("/days-lived")
+                .param("birthDate", birthDateString))
+                .andExpect(status().isBadRequest());
+    }
 }
