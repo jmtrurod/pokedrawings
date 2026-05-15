@@ -7,12 +7,13 @@ import java.util.Set;
 public class EuropeanCountryService {
 
     private static final Set<String> EUROPEAN_COUNTRIES = new HashSet<>(Arrays.asList(
-        "Germany", "France", "Spain", "Italy", "United Kingdom", "Poland", "Ukraine", "Romania", "Netherlands", "Belgium",
+        "Germany", "France", "Italy", "Poland", "Ukraine", "Romania", "Netherlands", "Belgium",
         "Greece", "Portugal", "Sweden", "Czech Republic", "Hungary", "Austria", "Switzerland", "Bulgaria", "Denmark",
         "Finland", "Slovakia", "Norway", "Ireland", "Croatia", "Bosnia and Herzegovina", "Albania", "Lithuania",
-        "Latvia", "Estonia", "Moldova", "Slovenia", "North Macedonia", "Serbia", "Montenegro", "Kosovo", "Cyprus",
+        "Latvia", "Estonia", "Moldova", "Slovenia", "Macedonia", "Serbia", "Montenegro", "Kosovo", "Cyprus",
         "Luxembourg", "Georgia", "Armenia", "Malta", "Iceland", "Andorra", "Monaco", "Liechtenstein", "San Marino",
-        "Vatican City", "Belarus"
+        "Vatican City", "Belarus", "Russia",
+        "Scotland", "England", "Wales"
     ));
 
     public boolean isEuropeanCountry(String countryName) {

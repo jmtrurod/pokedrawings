@@ -32,4 +32,28 @@ public class EuropeanCountryServiceTest {
     void isEuropeanCountry_invalidEmptyInput_returnsFalse() {
         assertFalse(europeanCountryService.isEuropeanCountry(""));
     }
+
+    @Test
+    void isEuropeanCountry_Russia_returnsTrue() {
+        assertTrue(europeanCountryService.isEuropeanCountry("Russia"));
+    }
+
+    @Test
+    void europeanCountries_splitUnitedKingdom_containsScotlandEnglandWalesAndNotUnitedKingdom() {
+        assertFalse(europeanCountryService.isEuropeanCountry("United Kingdom"));
+        assertTrue(europeanCountryService.isEuropeanCountry("Scotland"));
+        assertTrue(europeanCountryService.isEuropeanCountry("England"));
+        assertTrue(europeanCountryService.isEuropeanCountry("Wales"));
+    }
+
+    @Test
+    void isEuropeanCountry_NorthMacedoniaChangedToMacedonia_returnsTrueForMacedoniaAndFalseForNorthMacedonia() {
+        assertTrue(europeanCountryService.isEuropeanCountry("Macedonia"));
+        assertFalse(europeanCountryService.isEuropeanCountry("North Macedonia"));
+    }
+
+    @Test
+    void isEuropeanCountry_SpainRemoved_returnsFalse() {
+        assertFalse(europeanCountryService.isEuropeanCountry("Spain"));
+    }
 }
