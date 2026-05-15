@@ -1,5 +1,6 @@
 package com.pepeai.pokedrawings.controller;
 
+import com.pepeai.pokedrawings.model.PlayerChoice;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,7 +23,7 @@ public class GameControllerTest {
     void testPlayGame_rock() throws Exception {
         mockMvc.perform(post("/game/play")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"playerChoice\": \"rock\"}"))
+                .content("{\"playerChoice\": \"" + PlayerChoice.ROCK.name().toLowerCase() + "\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result").exists())
                 .andExpect(jsonPath("$.computerChoice").exists());
