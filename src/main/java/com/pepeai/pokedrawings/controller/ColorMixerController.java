@@ -1,5 +1,6 @@
 package com.pepeai.pokedrawings.controller;
 
+import com.pepeai.pokedrawings.model.RgbColor;
 import com.pepeai.pokedrawings.service.ColorMixerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,13 @@ public class ColorMixerController {
     }
 
     @GetMapping("/mixColors")
-    public String mixColors(@RequestParam String color1, @RequestParam String color2) {
+    public RgbColor mixColors(
+            @RequestParam int r1, @RequestParam int g1, @RequestParam int b1,
+            @RequestParam int r2, @RequestParam int g2, @RequestParam int b2) {
+
+        RgbColor color1 = new RgbColor(r1, g1, b1);
+        RgbColor color2 = new RgbColor(r2, g2, b2);
+
         return colorMixerService.mixColors(color1, color2);
     }
 }

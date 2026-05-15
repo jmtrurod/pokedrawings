@@ -1,13 +1,18 @@
 package com.pepeai.pokedrawings.controller;
 
+import com.pepeai.pokedrawings.model.RgbColor;
+import com.pepeai.pokedrawings.service.ColorMixerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(ColorMixerController.class)
 public class ColorMixerControllerTest {
@@ -15,66 +20,25 @@ public class ColorMixerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    void mixColors_redAndBlue_shouldReturnPurple() throws Exception {
-        mockMvc.perform(get("/mixColors")
-                .param("color1", "red")
-                .param("color2", "blue"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("purple"));
-    }
+    @MockBean
+    private ColorMixerService colorMixerService;
 
     @Test
-    void mixColors_blueAndRed_shouldReturnPurple() throws Exception {
-        mockMvc.perform(get("/mixColors")
-                .param("color1", "blue")
-                .param("color2", "red"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("purple"));
-    }
+    void testMixColors_validInput_returnsRgbColor() throws Exception {
+        RgbColor expectedColor = new RgbColor(127, 0, 127);
+        when(colorMixerService.mixColors(any(RgbColor.class), any(RgbColor.class)))
+                .thenReturn(expectedColor);
 
-    @Test
-    void mixColors_redAndYellow_shouldReturnOrange() throws Exception {
         mockMvc.perform(get("/mixColors")
-                .param("color1", "red")
-                .param("color2", "yellow"))
+                .param("r1", "255")
+                .param("g1", "0")
+                .param("b1", "0")
+                .param("r2", "0")
+                .param("g2", "0")
+                .param("b2", "255"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("orange"));
-    }
-
-    @Test
-    void mixColors_yellowAndRed_shouldReturnOrange() throws Exception {
-        mockMvc.perform(get("/mixColors")
-                .param("color1", "yellow")
-                .param("color2", "red"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("orange"));
-    }
-
-    @Test
-    void mixColors_blueAndYellow_shouldReturnGreen() throws Exception {
-        mockMvc.perform(get("/mixColors")
-                .param("color1", "blue")
-                .param("color2", "yellow"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("green"));
-    }
-
-    @Test
-    void mixColors_yellowAndBlue_shouldReturnGreen() throws Exception {
-        mockMvc.perform(get("/mixColors")
-                .param("color1", "yellow")
-                .param("color2", "blue"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("green"));
-    }
-
-    @Test
-    void mixColors_unknownColors_shouldReturnUnknownMix() throws Exception {
-        mockMvc.perform(get("/mixColors")
-                .param("color1", "black")
-                .param("color2", "white"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("unknown mix"));
+                .andExpect(jsonPath("$.red").value(127))
+                .andExpect(jsonPath("$.green").value(0))
+                .andExpect(jsonPath("$.blue").value(127));
     }
 }
