@@ -37,4 +37,12 @@ public class EuropeanCountryServiceTest {
     void isEuropeanCountry_Russia_returnsTrue() {
         assertTrue(europeanCountryService.isEuropeanCountry("Russia"));
     }
+
+    @Test
+    void europeanCountries_splitUnitedKingdom_containsScotlandEnglandWalesAndNotUnitedKingdom() {
+        assertFalse(europeanCountryService.isEuropeanCountry("United Kingdom"));
+        assertTrue(europeanCountryService.isEuropeanCountry("Scotland"));
+        assertTrue(europeanCountryService.isEuropeanCountry("England"));
+        assertTrue(europeanCountryService.isEuropeanCountry("Wales"));
+    }
 }
