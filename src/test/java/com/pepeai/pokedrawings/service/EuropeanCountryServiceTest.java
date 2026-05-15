@@ -3,6 +3,7 @@ package com.pepeai.pokedrawings.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 public class EuropeanCountryServiceTest {
 
@@ -31,5 +32,14 @@ public class EuropeanCountryServiceTest {
     @Test
     void isEuropeanCountry_invalidEmptyInput_returnsFalse() {
         assertFalse(europeanCountryService.isEuropeanCountry(""));
+    }
+
+    @Test
+    void getEuropeanCountries_splitsUnitedKingdom() {
+        var countries = europeanCountryService.getEuropeanCountries();
+        assertFalse(countries.contains("United Kingdom"));
+        assertTrue(countries.contains("Scotland"));
+        assertTrue(countries.contains("England"));
+        assertTrue(countries.contains("Wales"));
     }
 }
