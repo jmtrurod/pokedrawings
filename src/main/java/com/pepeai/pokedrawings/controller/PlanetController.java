@@ -11,6 +11,6 @@ public class PlanetController {
 
     @GetMapping("/planets")
     public List<String> getAllPlanets() {
-        return Arrays.asList("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune");
+        return Arrays.asList("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto");
     }
 }

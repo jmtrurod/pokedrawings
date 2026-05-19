@@ -26,6 +26,7 @@ public class PlanetControllerTest {
                 .andExpect(jsonPath("$[4]").value("Jupiter"))
                 .andExpect(jsonPath("$[5]").value("Saturn"))
                 .andExpect(jsonPath("$[6]").value("Uranus"))
-                .andExpect(jsonPath("$[7]").value("Neptune"));
+                .andExpect(jsonPath("$[7]").value("Neptune"))
+                .andExpect(jsonPath("$[8]").value("Pluto"));
     }
 }
