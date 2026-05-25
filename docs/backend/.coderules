@@ -57,7 +57,12 @@ If the new development affects the architecture in any way (for example, new end
 
 ---
 
-## 6. Agent Verification Loop
+## 6. Don't remove any functionality
+It' absolutely forbidden to delete any existing functionality unless it is explicitly requested
+
+---
+
+## 7. Agent Verification Loop
 Before final delivery of any code snippet or file:
 * Review your output against these 4 core pillars.
 * If an endpoint lacks the initial log, a variable is short (like idx), a package name is wrong, or Javadoc is generic, you MUST rewrite and correct the code autonomously before presenting the answer.
