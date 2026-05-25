@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Pokémon Display</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --pokedex-red: #d32f2f;
+            --pokedex-dark-red: #b71c1c;
+            --pokedex-blue: #2196f3;
+            --pokedex-dark-blue: #1976d2;
+            --pokedex-light-gray: #eceff1;
+            --pokedex-medium-gray: #cfd8dc;
+            --pokedex-dark-gray: #455a64;
+            --text-color-light: #ffffff;
+            --text-color-dark: #212121;
+            --card-background: #ffffff;
+            --border-radius: 10px;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, var(--pokedex-red), var(--pokedex-dark-red));
+            color: var(--text-color-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .pokedex-container {
+            background-color: var(--pokedex-dark-gray);
+            border: 8px solid var(--pokedex-light-gray);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .pokedex-header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Press Start 2P', cursive;
+            color: var(--pokedex-blue);
+            text-shadow: 2px 2px var(--pokedex-dark-blue);
+        }
+
+        .pokedex-header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .pokemon-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            color: var(--text-color-dark);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .pokemon-image-container {
+            text-align: center;
+            background-color: var(--pokedex-light-gray);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            border: 2px solid var(--pokedex-medium-gray);
+        }
+
+        .pokemon-image {
+            max-width: 100%;
+            height: auto;
+            image-rendering: pixelated; /* For classic pixel art look */
+        }
+
+        .pokemon-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .pokemon-details h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--pokedex-red);
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 1.8em;
+            text-transform: capitalize;
+        }
+
+        .pokemon-details p {
+            margin: 0;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .pokemon-details strong {
+            color: var(--pokedex-dark-blue);
+        }
+
+        .pokemon-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .type-badge {
+            background-color: var(--pokedex-blue);
+            color: var(--text-color-light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .next-pokemon-button {
+            background-color: var(--pokedex-blue);
+            color: var(--text-color-light);
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: var(--shadow);
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+        }
+
+        .next-pokemon-button:hover {
+            background-color: var(--pokedex-dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .next-pokemon-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .pokemon-card {
+                grid-template-columns: 1fr;
+            }
+            .pokedex-header h1 {
+                font-size: 1.8em;
+            }
+            .pokemon-details h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .pokedex-container {
+                padding: 20px;
+                border-width: 5px;
+            }
+            .pokedex-header h1 {
+                font-size: 1.5em;
+            }
+            .next-pokemon-button {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pokedex-container">
+        <div class="pokedex-header">
+            <h1>PokéDisplay</h1>
+        </div>
+
+        <div class="pokemon-card">
+            <div class="pokemon-image-container">
+                <img th:src="${pokemonImageUrl}" alt="Pokemon Image" class="pokemon-image" />
+            </div>
+            <div class="pokemon-details">
+                <h2 th:text="${pokemonName}">Pokemon Name</h2>
+                <p><strong>Pokédex No:</strong> <span th:text="${pokedexNumber}">#001</span></p>
+                <p><strong>Types:</strong></p>
+                <div class="pokemon-types">
+                    <span th:each="type : ${pokemonTypes}" th:text="${type}" class="type-badge">Type</span>
+                </div>
+                <p><strong>Description:</strong> <span th:text="${pokemonDescription}">A brief description of the pokemon.</span></p>
+            </div>
+        </div>
+
+        <div class="action-button-container">
+            <button class="next-pokemon-button" onclick="window.location.reload();">Next Pokémon</button>
+        </div>
+    </div>
+</body>
+</html>

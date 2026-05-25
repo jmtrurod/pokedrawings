@@ -42,14 +42,6 @@ The application follows a strict layered architecture to ensure separation of co
         *   `types` (List<TypeWrapper>): A list of type wrappers, each containing details about a Pokémon type.
         *   `flavor_text_entries` (List<FlavorTextEntry>): A list of flavor text entries, each containing a description in a specific language.
 
-### 2.4. Configuration
-
-*   **`RestTemplateConfig`** (`com.pepeai.pokedrawings.utils.RestTemplateConfig`)
-    *   **Description**: A Spring `@Configuration` class that provides a `RestTemplate` bean to the application context, enabling HTTP communication with external services.
-*   **`application.properties`**
-    *   **Property**: `pokeapi.base.url=https://pokeapi.co/api/v2/`
-    *   **Purpose**: Configures the base URL for the PokeAPI, used by `PokemonService`.
-
 ## 3. Feature: Retrieve Pokémon Types by Pokedex Number
 
 ### 3.1. Controller Layer
@@ -115,3 +107,42 @@ The application follows a strict layered architecture to ensure separation of co
         *   **Description**: Represents the sprites object from the PokeAPI response.
         *   **Fields**:
             *   `frontDefaultSpriteImageUrl` (String): Holds the URL of the default front sprite image.
+
+## 6. Feature: Display Random Pokémon on Web Page
+
+### 6.1. Controller Layer
+
+*   **`PokemonWebController`** (`com.pepeai.pokedrawings.controller.PokemonWebController`)
+    *   **Description**: A Spring Web Controller responsible for rendering a Thymeleaf template to display a random Pokémon. It generates a random Pokémon ID, fetches its details using the `PokemonService`, and prepares the data for the view.
+    *   **Endpoint**: `GET /`
+        *   **Purpose**: Generates a random Pokedex number (between 1 and 500), fetches Pokémon's name, types, description, and image URL using `PokemonService`, adds these details to the Spring `Model`, and returns the `pokemon-display` view.
+        *   **Parameters**: None.
+        *   **Response**: Returns the logical view name `pokemon-display`, which corresponds to the `pokemon-display.html` Thymeleaf template.
+        *   **Logging**: Includes an `INFO` level log at the start of the `displayRandomPokemon` method for traceability.
+
+### 6.2. View Layer (Thymeleaf Template)
+
+*   **`pokemon-display.html`** (`src/main/resources/templates/pokemon-display.html`)
+    *   **Description**: A Thymeleaf HTML template responsible for presenting the random Pokémon's information to the user.
+    *   **Data Displayed**: Pokédex Number, Pokémon Name, Pokémon Types (iterated), Pokémon Description, and Pokémon Image (using `th:src`).
+    *   **Styling**: Incorporates modern CSS with a Pokédex-inspired design, utilizing flexbox/grid for layout, clean card design, and appropriate color schemes.
+    *   **Interactivity**: Includes a "Next Pokémon" button that reloads the page to fetch and display a new random Pokémon.
+    *   **Thymeleaf Usage**: Employs `th:text` for displaying text content, `th:src` for image URLs, and `th:each` for iterating over the list of Pokémon types.
+
+## 7. Configuration
+
+This section outlines the key configuration aspects of the Pokedrawings application.
+
+### 7.1. Application Properties
+
+*   **`application.properties`**: Located in `src/main/resources`, this file contains application-wide settings.
+    *   **External API Base URL**: Configuration for the PokeAPI base URL.
+    *   **Server Port**: Defines the port on which the Spring Boot application runs.
+
+### 7.2. Maven Dependencies
+
+*   **`pom.xml`**: Manages project dependencies and build configurations.
+    *   **Spring Boot Starter Web**: For building web applications, including RESTful services.
+    *   **Thymeleaf**: Template engine for server-side rendering of HTML.
+    *   **Spring Boot Starter Test**: For writing unit and integration tests.
+    *   **Lombok**: (Optional) For reducing boilerplate code (e.g., getters, setters, constructors).
