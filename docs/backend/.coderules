@@ -1,0 +1,63 @@
+# Java Project Development Rules & Instructions
+
+You are an expert AI Software Engineer agent. You must strictly and without exception adhere to the following architectural, coding, and documentation rules when creating, modifying, or refactoring Java code in this project.
+
+---
+
+## 1. Project Architecture & Package Structure
+The codebase follows a strict layered architecture. Every new class or interface must be placed in one of the following authorized packages. Do not create alternative packages (e.g., do not use 'dao', use 'repository' instead).
+
+* **`controller`**: Dedicated to REST endpoints, HTTP request/response mappings, and API routing.
+* **`service`**: Contains the core business logic, service orchestrations, and transaction boundaries.
+* **`repository`**: Handles the data access layer, database queries, and ORM/JPA configurations.
+* **`model`**: Contains domain entities, Data Transfer Objects (DTOs), and POJOs.
+* **`utils`**: Reserved for stateless utility classes, helpers, shared constants, and configurations.
+
+---
+
+## 2. API Endpoint Logging Requirements
+To guarantee total traceability and strict observability, **every single REST endpoint** created or modified must comply with the following logging structure:
+
+* **Rule**: The absolute first line of executable code inside the endpoint method MUST be an `INFO` log.
+* **Log Format**: `"Endpoint [endpoint_name] has been reached with parameters [param1_value], [param2_value]"`
+* **Position**: No operations, validations, or logic can happen before this log line.
+
+### Example:
+```java
+@GetMapping("/{orderId}")
+public ResponseEntity<OrderResponse> getOrder(@PathVariable String orderId, @RequestParam String customerId) {
+    // RULE: First executable line must be this exact log format
+    logger.info("Endpoint getOrder has been reached with parameters orderId=" + orderId + ", customerId=" + customerId);
+
+    return ResponseEntity.ok(orderService.fetchOrderDetails(orderId, customerId));
+}
+
+---
+
+## 3. Variable Naming Convention
+Code self-documentation and absolute clarity take complete priority over brevity.
+
+* Rule: Variable names must be 100% descriptive of their intent, context, and data type if necessary.
+* Length: There is no length limit. Do not abbreviate or shorten names under any circumstance.
+* Forbidden Anti-patterns: i, idx, data, list, temp, str, mgr, usr, req.
+* Allowed Patterns examples: userRegistrationTimestampInMilliseconds, databaseConnectionRetryAttemptCount, processedFinancialTransactionList.
+
+---
+
+## 4. Documentation Standards (Javadoc)
+Every single structural addition must be meticulously documented so human developers and other AI agents can seamlessly understand the context.
+* Rule: Every new class, interface, enum, and method MUST include a 100% descriptive Javadoc.
+* Method Completeness: You must explicitly detail what the method does, and fully fill out every single @param, @return, and @throws tag with descriptive sentences.
+
+---
+
+## 5. Update architecture file
+The file /home/anasegb/Documentos/Pepe/java-project/pokedrawings/docs/ARCHITECTURE.md contains the information on the architecture of the developing app.
+If the new development affects the architecture in any way (for example, new endpoint created, new service created, etc.), you MUST update the ARCHITECTURE.md file at the end of your development.
+
+---
+
+## 6. Agent Verification Loop
+Before final delivery of any code snippet or file:
+* Review your output against these 4 core pillars.
+* If an endpoint lacks the initial log, a variable is short (like idx), a package name is wrong, or Javadoc is generic, you MUST rewrite and correct the code autonomously before presenting the answer.
