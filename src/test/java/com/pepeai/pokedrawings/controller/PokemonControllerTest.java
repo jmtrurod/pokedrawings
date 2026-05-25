@@ -86,4 +86,23 @@ class PokemonControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(expectedPokemonDescription));
     }
+
+    /**
+     * Tests that the GET /api/pokemon/{pokedexNumber}/image endpoint returns the correct Pokémon image URL
+     * when a valid Pokedex number is provided.
+     *
+     * @throws Exception if an error occurs during the mock MVC request.
+     */
+    @Test
+    void getPokemonImageByPokedexNumber_shouldReturnImageUrl() throws Exception {
+        // Arrange
+        int pokedexNumber = 25;
+        String expectedImageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png";
+        when(pokemonService.getPokemonImageByPokedexNumber(pokedexNumber)).thenReturn(expectedImageUrl);
+
+        // Act & Assert
+        mockMvc.perform(get("/api/pokemon/{pokedexNumber}/image", pokedexNumber))
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedImageUrl));
+    }
 }
