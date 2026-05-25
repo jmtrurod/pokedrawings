@@ -36,9 +36,10 @@ The application follows a strict layered architecture to ensure separation of co
 ### 2.3. Model Layer
 
 *   **`PokemonApiResponse`** (`com.pepeai.pokedrawings.model.PokemonApiResponse`)
-    *   **Description**: A simple POJO (Plain Old Java Object) used to deserialize the JSON response from the PokeAPI.
+    *   **Description**: A POJO used to deserialize the JSON response from the PokeAPI, now including Pokémon types.
     *   **Fields**:
         *   `name` (String): Holds the name of the Pokémon.
+        *   `types` (List<TypeWrapper>): A list of type wrappers, each containing details about a Pokémon type.
 
 ### 2.4. Configuration
 
@@ -47,3 +48,41 @@ The application follows a strict layered architecture to ensure separation of co
 *   **`application.properties`**
     *   **Property**: `pokeapi.base.url=https://pokeapi.co/api/v2/`
     *   **Purpose**: Configures the base URL for the PokeAPI, used by `PokemonService`.
+
+## 3. Feature: Retrieve Pokémon Types by Pokedex Number
+
+### 3.1. Controller Layer
+
+*   **`PokemonController`** (`com.pepeai.pokedrawings.controller.PokemonController`)
+    *   **Endpoint**: `GET /pokemon/{pokedexNumber}/types`
+        *   **Purpose**: Retrieves a list of types for a Pokémon given its Pokedex number.
+        *   **Parameters**:
+            *   `pokedexNumber` (path variable): An integer representing the unique identifier of the Pokémon.
+        *   **Response**: Returns a `List<String>` representing the Pokémon's types with an HTTP 200 OK status.
+        *   **Logging**: Includes an `INFO` level log at the start of the `getPokemonTypesByPokedexNumber` method for traceability.
+
+### 3.2. Service Layer
+
+*   **`PokemonService`** (`com.pepeai.pokedrawings.service.PokemonService`)
+    *   **Method**: `List<String> getPokemonTypesByPokedexNumber(int pokedexNumber)`
+        *   **Purpose**: Calls the external PokeAPI (`https://pokeapi.co/api/v2/pokemon/{pokedexNumber}`) to retrieve Pokémon details and extracts a list of the Pokémon's types.
+        *   **Dependencies**: Utilizes `RestTemplate` for making HTTP calls to the external API.
+
+## 3. Feature: Retrieve Pokémon Types by Pokedex Number
+
+### 3.1. Controller Layer
+
+*   **`PokemonController`** (`com.pepeai.pokedrawings.controller.PokemonController`)
+    *   **Endpoint**: `GET /pokemon/{pokedexNumber}/types`
+        *   **Purpose**: Retrieves a list of types for a Pokémon given its Pokedex number.
+        *   **Parameters**:
+            *   `pokedexNumber` (path variable): An integer representing the unique identifier of the Pokémon.
+        *   **Response**: Returns a `List<String>` representing the Pokémon's types with an HTTP 200 OK status.
+        *   **Logging**: Includes an `INFO` level log at the start of the `getPokemonTypesByPokedexNumber` method for traceability.
+
+### 3.2. Service Layer
+
+*   **`PokemonService`** (`com.pepeai.pokedrawings.service.PokemonService`)
+    *   **Method**: `List<String> getPokemonTypesByPokedexNumber(int pokedexNumber)`
+        *   **Purpose**: Calls the external PokeAPI (`https://pokeapi.co/api/v2/pokemon/{pokedexNumber}`) to retrieve Pokémon details and extracts a list of the Pokémon's types.
+        *   **Dependencies**: Utilizes `RestTemplate` for making HTTP calls to the external API.

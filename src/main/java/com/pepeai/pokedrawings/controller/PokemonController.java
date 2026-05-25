@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * REST controller for handling Pokémon-related requests.
  * Provides endpoints to retrieve Pokémon information.
@@ -41,5 +43,18 @@ public class PokemonController {
         logger.info("Endpoint getPokemonNameByPokedexNumber has been reached with parameters pokedexNumber=" + pokedexNumber);
         String pokemonName = pokemonService.getPokemonNameByPokedexNumber(pokedexNumber);
         return ResponseEntity.ok(pokemonName);
+    }
+
+    /**
+     * Retrieves a list of types for a Pokémon based on its Pokedex number.
+     *
+     * @param pokedexNumber The unique identifier (Pokedex number) of the Pokémon.
+     * @return A ResponseEntity containing a list of strings representing the Pokémon's types.
+     */
+    @GetMapping("/{pokedexNumber}/types")
+    public ResponseEntity<List<String>> getPokemonTypesByPokedexNumber(@PathVariable int pokedexNumber) {
+        logger.info("Endpoint getPokemonTypesByPokedexNumber has been reached with parameters pokedexNumber=" + pokedexNumber);
+        List<String> pokemonTypes = pokemonService.getPokemonTypesByPokedexNumber(pokedexNumber);
+        return ResponseEntity.ok(pokemonTypes);
     }
 }
