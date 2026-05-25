@@ -1,9 +1,14 @@
 package com.pepeai.pokedrawings.service;
 
 import com.pepeai.pokedrawings.model.PokemonApiResponse;
+import com.pepeai.pokedrawings.model.PokemonApiResponse.TypeWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service class responsible for handling Pokémon-related business logic,
@@ -41,5 +46,24 @@ public class PokemonService {
             return pokemonApiResponse.getName();
         }
         return null; // Or throw a specific exception if name is expected to be always present
+    }
+
+    /**
+     * Retrieves a list of types for a Pokémon by its Pokedex number from the PokeAPI.
+     *
+     * @param pokedexNumber The unique identifier (Pokedex number) of the Pokémon.
+     * @return A list of strings representing the Pokémon's types.
+     * @throws org.springframework.web.client.HttpClientErrorException if the Pokémon is not found (e.g., 404).
+     * @throws org.springframework.web.client.RestClientException for other API call errors.
+     */
+    public List<String> getPokemonTypesByPokedexNumber(int pokedexNumber) {
+        String apiUrl = pokeApiBaseUrl + "pokemon/" + pokedexNumber;
+        PokemonApiResponse pokemonApiResponse = restTemplate.getForObject(apiUrl, PokemonApiResponse.class);
+        if (pokemonApiResponse != null && pokemonApiResponse.getTypes() != null) {
+            return pokemonApiResponse.getTypes().stream()
+                    .map(typeWrapper -> typeWrapper.getType().getName())
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }
