@@ -3,11 +3,12 @@ package com.pepeai.pokedrawings.model;
 import java.util.List;
 
 /**
- * Represents the API response structure for a Pokémon, specifically for extracting the name and types.
+ * Represents the API response structure for a Pokémon, specifically for extracting the name, types, and description.
  */
 public class PokemonApiResponse {
     private String name;
     private List<TypeWrapper> types;
+    private List<FlavorTextEntry> flavorTextEntries;
 
     /**
      * Gets the name of the Pokémon.
@@ -43,6 +44,24 @@ public class PokemonApiResponse {
      */
     public void setTypes(List<TypeWrapper> types) {
         this.types = types;
+    }
+
+    /**
+     * Gets the list of flavor text entries for the Pokémon.
+     *
+     * @return A list of {@link FlavorTextEntry} objects, each containing a description in a specific language.
+     */
+    public List<FlavorTextEntry> getFlavorTextEntries() {
+        return flavorTextEntries;
+    }
+
+    /**
+     * Sets the list of flavor text entries for the Pokémon.
+     *
+     * @param flavorTextEntries A list of {@link FlavorTextEntry} objects to set.
+     */
+    public void setFlavorTextEntries(List<FlavorTextEntry> flavorTextEntries) {
+        this.flavorTextEntries = flavorTextEntries;
     }
 
     /**
@@ -127,6 +146,94 @@ public class PokemonApiResponse {
          * Sets the URL of the type.
          *
          * @param url The URL of the type to set.
+         */
+        public void setUrl(String url) {
+            this.url = url;
+        }
+    }
+
+    /**
+     * Inner class representing a flavor text entry for a Pokémon.
+     */
+    public static class FlavorTextEntry {
+        private String flavorText;
+        private Language language;
+
+        /**
+         * Gets the flavor text (description) of the Pokémon.
+         *
+         * @return The flavor text.
+         */
+        public String getFlavorText() {
+            return flavorText;
+        }
+
+        /**
+         * Sets the flavor text (description) of the Pokémon.
+         *
+         * @param flavorText The flavor text to set.
+         */
+        public void setFlavorText(String flavorText) {
+            this.flavorText = flavorText;
+        }
+
+        /**
+         * Gets the language of the flavor text.
+         *
+         * @return The {@link Language} object.
+         */
+        public Language getLanguage() {
+            return language;
+        }
+
+        /**
+         * Sets the language of the flavor text.
+         *
+         * @param language The {@link Language} object to set.
+         */
+        public void setLanguage(Language language) {
+            this.language = language;
+        }
+    }
+
+    /**
+     * Inner class representing the language of a flavor text entry.
+     */
+    public static class Language {
+        private String name;
+        private String url;
+
+        /**
+         * Gets the name of the language.
+         *
+         * @return The name of the language.
+         */
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * Sets the name of the language.
+         *
+         * @param name The name of the language to set.
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        /**
+         * Gets the URL of the language.
+         *
+         * @return The URL of the language.
+         */
+        public String getUrl() {
+            return url;
+        }
+
+        /**
+         * Sets the URL of the language.
+         *
+         * @param url The URL of the language to set.
          */
         public void setUrl(String url) {
             this.url = url;

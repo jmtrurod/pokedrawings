@@ -30,7 +30,7 @@ class PokemonControllerTest {
     private PokemonService pokemonService;
 
     /**
-     * Tests that the GET /pokemon/{pokedexNumber} endpoint returns the correct Pokémon name
+     * Tests that the GET /api/pokemon/{pokedexNumber} endpoint returns the correct Pokémon name
      * when a valid Pokedex number is provided.
      *
      * @throws Exception if an error occurs during the mock MVC request.
@@ -43,13 +43,13 @@ class PokemonControllerTest {
         when(pokemonService.getPokemonNameByPokedexNumber(pokedexNumber)).thenReturn(expectedPokemonName);
 
         // Act & Assert
-        mockMvc.perform(get("/pokemon/{pokedexNumber}", pokedexNumber))
+        mockMvc.perform(get("/api/pokemon/{pokedexNumber}", pokedexNumber))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expectedPokemonName));
     }
 
     /**
-     * Tests that the GET /pokemon/{pokedexNumber}/types endpoint returns a list of Pokémon types
+     * Tests that the GET /api/pokemon/{pokedexNumber}/types endpoint returns a list of Pokémon types
      * when a valid Pokedex number is provided.
      *
      * @throws Exception if an error occurs during the mock MVC request.
@@ -63,8 +63,27 @@ class PokemonControllerTest {
         when(pokemonService.getPokemonTypesByPokedexNumber(pokedexNumber)).thenReturn(expectedPokemonTypes);
 
         // Act & Assert
-        mockMvc.perform(get("/pokemon/{pokedexNumber}/types", pokedexNumber))
+        mockMvc.perform(get("/api/pokemon/{pokedexNumber}/types", pokedexNumber))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
+    }
+
+    /**
+     * Tests that the GET /api/pokemon/{pokedexNumber}/description endpoint returns the correct Pokémon description
+     * when a valid Pokedex number is provided.
+     *
+     * @throws Exception if an error occurs during the mock MVC request.
+     */
+    @Test
+    void getPokemonDescriptionByPokedexNumber_shouldReturnPokemonDescription() throws Exception {
+        // Arrange
+        int pokedexNumber = 1;
+        String expectedPokemonDescription = "Bulbasaur can be seen napping in the sun and is a grass/poison type.";
+        when(pokemonService.getPokemonDescriptionByPokedexNumber(pokedexNumber)).thenReturn(expectedPokemonDescription);
+
+        // Act & Assert
+        mockMvc.perform(get("/api/pokemon/{pokedexNumber}/description", pokedexNumber))
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedPokemonDescription));
     }
 }
