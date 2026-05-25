@@ -70,4 +70,21 @@ public class PokemonController {
         String pokemonDescription = pokemonService.getPokemonDescriptionByPokedexNumber(pokedexNumber);
         return ResponseEntity.ok(pokemonDescription);
     }
+
+    /**
+     * Retrieves the default front sprite image URL of a Pokémon based on its Pokedex number.
+     *
+     * @param pokedexNumber The unique identifier (Pokedex number) of the Pokémon.
+     * @return A ResponseEntity containing the URL of the Pokémon's default front sprite image if found, or an error status.
+     */
+    @GetMapping("/{pokedexNumber}/image")
+    public ResponseEntity<String> getPokemonImageByPokedexNumber(@PathVariable int pokedexNumber) {
+        logger.info("Endpoint getPokemonImageByPokedexNumber has been reached with parameters pokedexNumber=" + pokedexNumber);
+        String pokemonImageUrl = pokemonService.getPokemonImageByPokedexNumber(pokedexNumber);
+        if (pokemonImageUrl != null) {
+            return ResponseEntity.ok(pokemonImageUrl);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

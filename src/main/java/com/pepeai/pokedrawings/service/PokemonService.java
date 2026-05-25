@@ -87,4 +87,21 @@ public class PokemonService {
         }
         return null;
     }
+
+    /**
+     * Retrieves the default front sprite image URL of a Pokémon by its Pokedex number from the PokeAPI.
+     *
+     * @param pokedexNumber The unique identifier (Pokedex number) of the Pokémon.
+     * @return The URL of the Pokémon's default front sprite image, or null if not found.
+     * @throws org.springframework.web.client.HttpClientErrorException if the Pokémon is not found (e.g., 404).
+     * @throws org.springframework.web.client.RestClientException for other API call errors.
+     */
+    public String getPokemonImageByPokedexNumber(int pokedexNumber) {
+        String apiUrl = pokeApiBaseUrl + "pokemon/" + pokedexNumber;
+        PokemonApiResponse pokemonApiResponse = restTemplate.getForObject(apiUrl, PokemonApiResponse.class);
+        if (pokemonApiResponse != null && pokemonApiResponse.getSprites() != null) {
+            return pokemonApiResponse.getSprites().getFrontDefaultSpriteImageUrl();
+        }
+        return null;
+    }
 }

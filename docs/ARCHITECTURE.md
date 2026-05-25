@@ -29,7 +29,6 @@ The application follows a strict layered architecture to ensure separation of co
 ### 2.2. Service Layer
 
 *   **`PokemonService`** (`com.pepeai.pokedrawings.service.PokemonService`)
-    *   **Description**: Contains the business logic for fetching Pokémon data. It interacts with the external PokeAPI.
     *   **Method**: `String getPokemonNameByPokedexNumber(int pokedexNumber)`
         *   **Purpose**: Calls the external PokeAPI (`https://pokeapi.co/api/v2/pokemon/{pokedexNumber}`) to retrieve Pokémon details and extracts the Pokémon's name.
         *   **Dependencies**: Utilizes `RestTemplate` for making HTTP calls to the external API.
@@ -88,3 +87,31 @@ The application follows a strict layered architecture to ensure separation of co
     *   **Method**: `String getPokemonDescriptionByPokedexNumber(int pokedexNumber)`
         *   **Purpose**: Calls the external PokeAPI (`https://pokeapi.co/api/v2/pokemon-species/{pokedexNumber}`) to retrieve Pokémon species details and extracts the English flavor text (description).
         *   **Dependencies**: Utilizes `RestTemplate` for making HTTP calls to the external API.
+
+## 5. Feature: Retrieve Pokémon Image by Pokedex Number
+
+### 5.1. Controller Layer
+
+*   **`PokemonController`** (`com.pepeai.pokedrawings.controller.PokemonController`)
+    *   **Endpoint**: `GET /api/pokemon/{pokedexNumber}/image`
+        *   **Purpose**: Retrieves the default front sprite image URL of a Pokémon given its Pokedex number.
+        *   **Parameters**:
+            *   `pokedexNumber` (path variable): An integer representing the unique identifier of the Pokémon.
+        *   **Response**: Returns a `String` representing the Pokémon's image URL with an HTTP 200 OK status if found, or HTTP 404 Not Found if the image URL is null.
+        *   **Logging**: Includes an `INFO` level log at the start of the `getPokemonImageByPokedexNumber` method for traceability.
+
+### 5.2. Service Layer
+
+*   **`PokemonService`** (`com.pepeai.pokedrawings.service.PokemonService`)
+    *   **Method**: `String getPokemonImageByPokedexNumber(int pokedexNumber)`
+        *   **Purpose**: Calls the external PokeAPI (`https://pokeapi.co/api/v2/pokemon/{pokedexNumber}`) to retrieve Pokémon details and extracts the URL of the default front sprite (`sprites.frontDefaultSpriteImageUrl`).
+        *   **Dependencies**: Utilizes `RestTemplate` for making HTTP calls to the external API.
+
+### 5.3. Model Layer
+
+*   **`PokemonApiResponse`** (`com.pepeai.pokedrawings.model.PokemonApiResponse`)
+    *   **Update**: Added a `sprites` field of type `Sprites`.
+    *   **New Inner Class**: `public static class Sprites`
+        *   **Description**: Represents the sprites object from the PokeAPI response.
+        *   **Fields**:
+            *   `frontDefaultSpriteImageUrl` (String): Holds the URL of the default front sprite image.

@@ -1,14 +1,16 @@
 package com.pepeai.pokedrawings.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
- * Represents the API response structure for a Pokémon, specifically for extracting the name, types, and description.
+ * Represents the API response structure for a Pokémon, specifically for extracting the name, types, description, and sprites.
  */
 public class PokemonApiResponse {
     private String name;
     private List<TypeWrapper> types;
     private List<FlavorTextEntry> flavorTextEntries;
+    private Sprites sprites;
 
     /**
      * Gets the name of the Pokémon.
@@ -62,6 +64,24 @@ public class PokemonApiResponse {
      */
     public void setFlavorTextEntries(List<FlavorTextEntry> flavorTextEntries) {
         this.flavorTextEntries = flavorTextEntries;
+    }
+
+    /**
+     * Gets the sprites object for the Pokémon, containing various image URLs.
+     *
+     * @return The {@link Sprites} object.
+     */
+    public Sprites getSprites() {
+        return sprites;
+    }
+
+    /**
+     * Sets the sprites object for the Pokémon.
+     *
+     * @param sprites The {@link Sprites} object to set.
+     */
+    public void setSprites(Sprites sprites) {
+        this.sprites = sprites;
     }
 
     /**
@@ -237,6 +257,32 @@ public class PokemonApiResponse {
          */
         public void setUrl(String url) {
             this.url = url;
+        }
+    }
+
+    /**
+     * Inner class representing the sprites of a Pokémon.
+     */
+    public static class Sprites {
+        @JsonProperty("front_default")
+        private String frontDefaultSpriteImageUrl;
+
+        /**
+         * Gets the URL of the default front sprite image.
+         *
+         * @return The URL of the default front sprite image.
+         */
+        public String getFrontDefaultSpriteImageUrl() {
+            return frontDefaultSpriteImageUrl;
+        }
+
+        /**
+         * Sets the URL of the default front sprite image.
+         *
+         * @param frontDefaultSpriteImageUrl The URL of the default front sprite image to set.
+         */
+        public void setFrontDefaultSpriteImageUrl(String frontDefaultSpriteImageUrl) {
+            this.frontDefaultSpriteImageUrl = frontDefaultSpriteImageUrl;
         }
     }
 }
