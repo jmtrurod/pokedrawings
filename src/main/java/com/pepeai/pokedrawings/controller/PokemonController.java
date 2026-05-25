@@ -16,7 +16,7 @@ import java.util.List;
  * Provides endpoints to retrieve Pokémon information.
  */
 @RestController
-@RequestMapping("/pokemon")
+@RequestMapping("/api/pokemon")
 public class PokemonController {
 
     private static final Logger logger = LoggerFactory.getLogger(PokemonController.class);
@@ -56,5 +56,18 @@ public class PokemonController {
         logger.info("Endpoint getPokemonTypesByPokedexNumber has been reached with parameters pokedexNumber=" + pokedexNumber);
         List<String> pokemonTypes = pokemonService.getPokemonTypesByPokedexNumber(pokedexNumber);
         return ResponseEntity.ok(pokemonTypes);
+    }
+
+    /**
+     * Retrieves the description of a Pokémon based on its Pokedex number.
+     *
+     * @param pokedexNumber The unique identifier (Pokedex number) of the Pokémon.
+     * @return A ResponseEntity containing the description of the Pokémon if found, or an error status.
+     */
+    @GetMapping("/{pokedexNumber}/description")
+    public ResponseEntity<String> getPokemonDescriptionByPokedexNumber(@PathVariable int pokedexNumber) {
+        logger.info("Endpoint getPokemonDescriptionByPokedexNumber has been reached with parameters pokedexNumber=" + pokedexNumber);
+        String pokemonDescription = pokemonService.getPokemonDescriptionByPokedexNumber(pokedexNumber);
+        return ResponseEntity.ok(pokemonDescription);
     }
 }

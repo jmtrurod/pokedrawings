@@ -66,4 +66,25 @@ public class PokemonService {
         }
         return Collections.emptyList();
     }
+
+    /**
+     * Retrieves the description of a Pokémon by its Pokedex number from the PokeAPI.
+     *
+     * @param pokedexNumber The unique identifier (Pokedex number) of the Pokémon.
+     * @return The description of the Pokémon in English, or null if not found.
+     * @throws org.springframework.web.client.HttpClientErrorException if the Pokémon is not found (e.g., 404).
+     * @throws org.springframework.web.client.RestClientException for other API call errors.
+     */
+    public String getPokemonDescriptionByPokedexNumber(int pokedexNumber) {
+        String apiUrl = pokeApiBaseUrl + "pokemon-species/" + pokedexNumber; // Description is in pokemon-species endpoint
+        PokemonApiResponse pokemonApiResponse = restTemplate.getForObject(apiUrl, PokemonApiResponse.class);
+        if (pokemonApiResponse != null && pokemonApiResponse.getFlavorTextEntries() != null) {
+            return pokemonApiResponse.getFlavorTextEntries().stream()
+                    .filter(entry -> "en".equals(entry.getLanguage().getName()))
+                    .findFirst()
+                    .map(entry -> entry.getFlavorText().replace("\n", " ").replace("\f", " "))
+                    .orElse(null);
+        }
+        return null;
+    }
 }
